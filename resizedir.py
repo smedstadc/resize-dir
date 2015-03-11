@@ -1,3 +1,5 @@
+"""Utility to shrink JPEG ditigal photos under a given directory if they are larger than a given resolution. Useful if
+you want to keep old photos, but save space too."""
 import argh
 import os
 from PIL import Image
@@ -23,7 +25,7 @@ class ProgressCounter(object):
 
 
 def main(path, width, height, quality=100):
-    path = os.path.abspath(path)
+    path = os.path.expanduser(path)
     size = (int(width), int(height))
     queue = multiprocessing.JoinableQueue()
     print("WARNING: This operation is destructive. Resized files under the path '{}' will be overwritten. Do not "
