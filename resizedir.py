@@ -69,10 +69,11 @@ def resize_worker(queue, size, quality, progressbar):
             filepath = queue.get()
             progressbar.update()
             try:
-                resize_one(filepath, size, quality)
-            except Exception as e:
+                if filepath.endswith(".jpg") or filepath.endswith(".jpeg"):
+                    resize_one(filepath, size, quality)
+            except OSError as e:
                 with open('resizedir.log', 'a') as f:
-                    f.write(str(e) + '\n')
+                    f.write(str(e))
         finally:
             queue.task_done()
 
